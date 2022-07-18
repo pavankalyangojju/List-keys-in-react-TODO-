@@ -9,6 +9,7 @@ import { TodoList } from "./TodoList";
 
 export const Todo = () => {
     const [todoList,setTodoList] = useState([]);
+    const [Showfiltered, setShowfiltered] = useState(false);
 
 
     const handleAddTodo = (todo) => {
@@ -43,14 +44,18 @@ export const Todo = () => {
         <div>
             <TodoInput handleAddTodo = {handleAddTodo}/>
             {/* ///3rd/// 4th*/}
-            <TodoList list={todoList} handleToggle={handleToggle} />
+            <TodoList 
+            list={setShowfiltered ? todoList.filter((e) => !e.status) : todoList} 
+            handleToggle={handleToggle} 
+            />
             {/* ///3rd end/////// */}
 
             <button onClick={()=>{
-                const update = todoList.filter((e) => !e.status);
-                setTodoList(update)
+                setShowfiltered(!Showfiltered)
+                // const update = todoList.filter((e) => !e.status);
+                // setTodoList(update)
 
-            }}>Show Not Completed</button>
+            }}>{Showfiltered ? "Show Not Completed" : "show all"}</button>
         </div>
     );
 };
